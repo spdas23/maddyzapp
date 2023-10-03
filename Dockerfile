@@ -1,11 +1,5 @@
-version: '3'
-services:
-  nginx:
-    image: nginx:1.11.8-alpine
-    ports:
-      - "8081:80"
-    volumes:
-      - my_test_volume:/usr/share/appis
-
+FROM nginx:latest
+COPY ./index.html /usr/share/nginx/html/index.html
+Expose 8090
 
 
