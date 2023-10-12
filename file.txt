@@ -1,4 +1,2 @@
 {
-  "ServerURL": "https://hub.docker.com/repository/docker/maddyz23/myspace/general",
-
 }
