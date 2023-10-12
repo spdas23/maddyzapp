@@ -1,5 +1,5 @@
 {
   "ServerURL": "https://hub.docker.com/repository/docker/maddyz23/myspace/general",
-  "Username": "david",
-  "Secret": "passw0rd1"
+  "Username": "maddyz23",
+  "Secret": "Spd277490"
 }
