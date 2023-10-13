@@ -18,7 +18,7 @@ stage('Building our image') {
         script {
             sh('pwd')
             sh 'docker logout'
-            sh('docker build -t maddyz23/myspace:$BUILD_NUMBER . --no-cache')
+            sh('docker build -t maddyz23/myspace:v$BUILD_NUMBER . --no-cache')
             sh('docker images')
             }
         }
@@ -26,12 +26,12 @@ stage('Building our image') {
 stage('Deploy our image') {
     steps{
         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-        sh ('docker push maddyz23/myspace:$BUILD_NUMBER')
+        sh ('docker push maddyz23/myspace:v$BUILD_NUMBER')
     }
 }
 stage('Cleaning up') {
     steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:v$BUILD_NUMBER"
         }
     }
 }
