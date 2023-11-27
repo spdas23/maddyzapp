@@ -31,7 +31,7 @@ stage('Deploy our image') {
 }
 stage('Deploy to ansible') {
     steps{
-        sh 'ansiblePlaybook becomeUser: null, credentialsId: 'node-002', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml', sudoUser: null, vaultTmpPath: '''
+        sh ('ansiblePlaybook becomeUser: null, credentialsId: 'node-002', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml', sudoUser: null, vaultTmpPath: ''')
     }
 }
 stage('Cleaning up') {
