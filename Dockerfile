@@ -1,8 +1,14 @@
-FROM centos:7
-RUN yum update -y && yum install epel-release -y
-RUN yum install nginx -y  
+FROM ubuntu:18.04
+
+LABEL maintainer="maddy"
+
+RUN apt-get update && \
+    apt-get install -y -q curl gnupg2
+RUN curl http://nginx.org/keys/nginx_signing.key | apt-key add -
+
+RUN apt-get update && \
+    apt-get install -y -q nginx
 COPY ./index.html /var/www/html/index.html
-Expose 80
+EXPOSE 443 80
+
 CMD ["nginx", "-g", "daemon off;"]
-
-
