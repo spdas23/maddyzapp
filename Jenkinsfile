@@ -32,7 +32,7 @@ stage('Deploy our image') {
 stage('Deploy to ansible') {
     steps{
         //sh ('ansiblePlaybook credentialsId: 'node-002', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml')
-        sh ('ansiblePlaybook inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml')    
+        sh ('ansiblePlaybook inventory: '/etc/ansible/hosts', credentialsId: 'node-002', playbook: '/etc/ansible/docker.yaml')    
     }
 }
 stage('Cleaning up') {
