@@ -31,7 +31,7 @@ stage('Deploy our image') {
 }
 stage('Deploy to ansible') {
     steps{
-        ansiblePlaybook credentialsId: 'node-002', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml
+        ansiblePlaybook credentialsId: 'node-002', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml'
         //sh 'ansiblePlaybook credentialsId: 'node-002', inventory: '/etc/ansible/hosts',playbook: '/etc/ansible/docker.yaml'    
     }
 }
