@@ -29,11 +29,11 @@ stage('Deploy our image') {
         sh ('docker push maddyz23/myspace:latest')
     }
 }
-stage('Deploy to Ansible Servers') {
+/*stage('Deploy to Ansible Servers') {
     steps{
         ansiblePlaybook credentialsId: 'node-002', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml'
          }
-}
+}*/
 stage('Cleaning up') {
     steps{
         sh "docker rmi $registry:latest"
