@@ -1,43 +1,32 @@
 pipeline {
-environment {
-    registry = "maddyz23/myspace"
-    registryCredential = 'maddyz23'
-    dockerImage = ''
-    DOCKERHUB_CREDENTIALS=credentials('docker-token')
-
-}
-agent any
-stages {
-    stage('Cloning our Git') {
-        steps {
-            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/spdas23/maddyzapp']])
+    agent any
+    
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/spdas23/maddyzapp.git'
+            }
         }
-}
-stage('Building our image') {
-    steps{
-        script {
-            sh('pwd')
-            sh 'docker logout'
-            sh('docker build -t maddyz23/myspace:latest . --no-cache')
-            sh('docker images')
+
+        stage('Build') {
+            steps {
+               // sh 'npm install'   // Modify based on your application type
+            }
+        }
+
+        stage('Test') {
+            steps {
+                //sh 'npm test'    // Ensure tests pass before deployment
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sshagent(['compute-engine-key']) {
+                    sh 'scp -r index.html azureuser@52.186.55.138:/var/www/html'
+                    sh 'ssh azureuser@52.186.55.138 "sudo systemctl restart nginx"'
+                }
             }
         }
     }
-stage('Deploy our image') {
-    steps{
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-        sh ('docker push maddyz23/myspace:latest')
-    }
-}
-/*stage('Deploy to Ansible Servers') {
-    steps{
-        ansiblePlaybook credentialsId: 'node-002', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/docker.yaml'
-         }
-}*/
-stage('Cleaning up') {
-    steps{
-        sh "docker rmi $registry:latest"
-        }
-    }
-}
 }
